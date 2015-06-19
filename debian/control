@@ -1,0 +1,15 @@
+Source: openmediavault-remotedesktop
+Section: net
+XB-Plugin-Section: network
+Priority: optional
+Maintainer: OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.6
+Homepage: http://omv-extras.org/
+
+Package: openmediavault-remotedesktop
+Architecture: all
+Depends: openmediavault (>= 1.18), xfce4, tightvncserver,
+ xfonts-base, xrdp
+Description: Remote desktop plugin for OpenMediaVault.
+ Installs xfce4 minimal desktop environment and rdp server.

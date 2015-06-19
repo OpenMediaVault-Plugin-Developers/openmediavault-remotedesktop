@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# @author    Volker Theile <volker.theile@openmediavault.org>
+# @author    OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+# @copyright Copyright (c) 2009-2013 Volker Theile
+# @copyright Copyright (c) 2015 OpenMediaVault Plugin Developers
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+XRDP_CONFIG="/etc/xrdp/xrdp.ini"
+
+rdpport=$(omv_config_get "//services/remotedesktop/rdpport")
+cryptlevel=$(omv_config_get "//services/remotedesktop/cryptlevel")
+
+# Create updatedb config file
+cat <<EOF > ${XRDP_CONFIG}
+# this file was automatically generated
+[globals]
+bitmap_cache=yes
+bitmap_compression=yes
+port=${rdpport}
+crypt_level=${cryptlevel}
+channel_code=1
+
+[xrdp1]
+name=sesman-Xvnc
+lib=libvnc.so
+username=ask
+password=ask
+ip=127.0.0.1
+port=-1
+EOF
+
+# restart xrdp service
+invoke-rc.d xrdp restart
+
+exit 0
