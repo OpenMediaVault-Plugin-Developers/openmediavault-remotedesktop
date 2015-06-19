@@ -65,6 +65,18 @@ Ext.define("OMV.module.admin.service.remotedesktop.Settings", {
                 triggerAction : "all",
                 value         : "low"
             }]
+        },{
+            xtype         : "fieldset",
+            title         : _("Notes"),
+            fieldDefaults : {
+                labelSeparator : ""
+            },
+            items         : [{
+                border : false,
+                html   : "<ul>" +
+                           "<li>" + _("Connecting user must have existing home directory.") + "</li>" +
+                         "</ul>"
+            }]
         }];
     }
 });
