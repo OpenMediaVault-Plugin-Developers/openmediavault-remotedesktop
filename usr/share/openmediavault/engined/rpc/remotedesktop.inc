@@ -3,7 +3,7 @@
  * @author    Volker Theile <volker.theile@openmediavault.org>
  * @author    OpenMediaVault Plugin Developers <plugins@omv-extras.org>
  * @copyright Copyright (c) 2009-2013 Volker Theile
- * @copyright Copyright (c) 2015 OpenMediaVault Plugin Developers
+ * @copyright Copyright (c) 2015-2016 OpenMediaVault Plugin Developers
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ class OMVRpcServiceRemoteDesktop extends OMVRpcServiceAbstract
 
     private function getXPath()
     {
-        return sprintf( "//services/%s", $this->getPluginName() );
+        return sprintf( "/config/services/%s", $this->getPluginName() );
     }
 
     private function getEventMessagePath()
@@ -61,14 +61,13 @@ class OMVRpcServiceRemoteDesktop extends OMVRpcServiceAbstract
         // Validate the RPC caller context.
         $this->validateMethodContext(
             $context,
-            array( "role" => OMV_ROLE_ADMINISTRATOR )
+            [ "role" => OMV_ROLE_ADMINISTRATOR ]
         );
 
         // Get the configuration object.
         $object = $xmlConfig->get($this->getXPath());
 
-        if (is_null($object))
-        {
+        if (is_null($object)) {
             throw new OMVException(
                 OMVErrorMsg::E_CONFIG_GET_OBJECT_FAILED,
                 $this->getXPath()
@@ -88,7 +87,7 @@ class OMVRpcServiceRemoteDesktop extends OMVRpcServiceAbstract
         // Validate the RPC caller context.
         $this->validateMethodContext(
             $context,
-            array( "role" => OMV_ROLE_ADMINISTRATOR )
+            [ "role" => OMV_ROLE_ADMINISTRATOR ]
         );
 
         // Validate the parameters of the RPC service method.
@@ -104,13 +103,12 @@ class OMVRpcServiceRemoteDesktop extends OMVRpcServiceAbstract
         );
 
         // Update the configuration object.
-        $object = array(
+        $object = [
             "rdpport"    => $params["rdpport"],
             "cryptlevel" => $params["cryptlevel"]
-        );
+        ];
 
-        if ($xmlConfig->replace($this->getXPath(), $object) === false)
-        {
+        if ($xmlConfig->replace($this->getXPath(), $object) === false) {
             throw new OMVException(
                 OMVErrorMsg::E_CONFIG_SET_OBJECT_FAILED
             );
@@ -126,7 +124,7 @@ class OMVRpcServiceRemoteDesktop extends OMVRpcServiceAbstract
 
         // Return the configuration object.
         return $object;
-    }    
+    }
 }
 
 // Register the RPC service.

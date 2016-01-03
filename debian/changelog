@@ -1,3 +1,9 @@
+openmediavault-remotedesktop (3.0) stable; urgency=medium
+
+  * Adapt to OMV 3.0
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Sun, 03 Jan 2016 14:07:12 -0600
+
 openmediavault-remotedesktop (1.0) stable; urgency=low
 
   * Initial release
