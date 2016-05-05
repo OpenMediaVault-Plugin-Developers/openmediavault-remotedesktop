@@ -17,59 +17,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-require_once "openmediavault/config.inc";
-require_once "openmediavault/error.inc";
-require_once "openmediavault/module.inc";
-
-class OMVModuleRemoteDesktop extends OMVModuleServiceAbstract implements
-    OMVINotifyListener
+class OMVModuleRemoteDesktop extends \OMV\Engine\Module\ServiceAbstract
+    implements \OMV\Engine\Notify\IListener
 {
     public function getName()
     {
         return "RemoteDesktop";
     }
 
-    private function getPluginName()
-    {
-        return strtolower($this->getName());
-    }
-
-    private function getXPath()
-    {
-        return sprintf("/config/services/%s", $this->getPluginName());
-    }
-
-    private function getEventMessagePath()
-    {
-        return sprintf("org.openmediavault.services.%s", $this->getPluginName());
-    }
-
     public function applyConfig()
     {
-        global $xmlConfig;
-
-        $cmd = sprintf("omv-mkconf %s 2>&1", $this->getPluginName());
-
-        if (0 !== $this->exec($cmd, $output)) {
-            throw new OMVException(
-                OMVErrorMsg::E_EXEC_FAILED,
-                $cmd,
-                implode("\n", $output)
-            );
-        }
+        $cmd = new \OMV\System\Process("omv-mkconf", "remotedesktop");
+        $cmd->setRedirect2to1(TRUE);
+        $cmd->execute();
     }
 
-    public function bindListeners(OMVNotifyDispatcher $dispatcher)
+    function bindListeners(\OMV\Engine\Notify\Dispatcher $dispatcher)
     {
         $dispatcher->addListener(
             OMV_NOTIFY_MODIFY,
-            $this->getEventMessagePath(),
+            "org.openmediavault.conf.service.remotedesktop",
             [ $this, "setDirty" ]
         );
     }
 }
-
-// Register module.
-$moduleMgr = &OMVModuleMgr::getInstance();
-$moduleMgr->registerModule(new OMVModuleRemoteDesktop());

@@ -9,7 +9,10 @@ Homepage: http://omv-extras.org/
 
 Package: openmediavault-remotedesktop
 Architecture: all
-Depends: openmediavault (= 3.0.13), xfce4, tightvncserver,
- xfonts-base, xrdp
+Depends: openmediavault (>= 3.0.15),
+         tightvncserver,
+         xfce4,
+         xfonts-base,
+         xrdp
 Description: Remote desktop plugin for OpenMediaVault.
  Installs xfce4 minimal desktop environment and rdp server.
