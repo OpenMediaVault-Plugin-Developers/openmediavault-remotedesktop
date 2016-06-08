@@ -52,13 +52,6 @@ class OMVRpcServiceRemoteDesktop extends \OMV\Rpc\ServiceAbstract
         $object = $db->get("conf.service.remotedesktop");
         $object->setAssoc($params);
         $db->set($object);
-        // Notify configuration changes.
-        $dispatcher = \OMV\Engine\Notify\Dispatcher::getInstance();
-        $dispatcher->notify(
-            OMV_NOTIFY_MODIFY,
-            "org.openmediavault.conf.service.remotedesktop",
-            $object->getAssoc()
-        );
         // Return the configuration object.
         return $object->getAssoc();
     }
