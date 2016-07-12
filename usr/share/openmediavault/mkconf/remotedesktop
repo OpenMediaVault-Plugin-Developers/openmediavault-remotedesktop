@@ -47,6 +47,13 @@ ip=127.0.0.1
 port=-1
 EOF
 
+# backup keyboard shortcuts file and change tab value
+cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
+   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml.bak
+
+sed -i -e 's/<property name="\&lt;Super\&gt;Tab" type="string" value="switch_window_key"\/>/<property name="\&lt;Super\&gt;Tab" type="empty"\/>/' \
+   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+
 # restart xrdp service
 deb-systemd-invoke start xrdp.service >/dev/null || true
 

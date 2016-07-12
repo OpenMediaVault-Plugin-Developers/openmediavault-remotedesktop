@@ -1,3 +1,9 @@
+openmediavault-remotedesktop (3.4) stable; urgency=low
+
+  * Fix tab key
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Tue, 12 Jul 2016 09:17:38 -0500
+
 openmediavault-remotedesktop (3.3) stable; urgency=low
 
   * Update for auto notifications
