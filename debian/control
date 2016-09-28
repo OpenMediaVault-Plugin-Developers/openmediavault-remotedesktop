@@ -9,7 +9,7 @@ Homepage: http://omv-extras.org/
 
 Package: openmediavault-remotedesktop
 Architecture: all
-Depends: openmediavault (>= 3.0.21),
+Depends: openmediavault (>= 3.0.40),
          tightvncserver,
          xfce4,
          xfonts-base,
