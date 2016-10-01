@@ -13,6 +13,7 @@ Depends: openmediavault (>= 3.0.40),
          tightvncserver,
          xfce4,
          xfonts-base,
-         xrdp
+         xrdp,
+         xterm
 Description: Remote desktop plugin for OpenMediaVault.
  Installs xfce4 minimal desktop environment and rdp server.
