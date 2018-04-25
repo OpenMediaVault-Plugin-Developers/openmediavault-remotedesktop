@@ -13,6 +13,7 @@ Depends: openmediavault (>= 4.0.5),
          tigervnc-standalone-server,
          xfce4,
          xfonts-base,
+         xorgxrdp,
          xrdp (>= 0.9.4),
          xterm
 Description: Remote desktop plugin for OpenMediaVault.

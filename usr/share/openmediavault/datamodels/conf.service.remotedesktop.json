@@ -18,7 +18,8 @@
 			"enum": [
 				"low",
 				"medium",
-				"high"
+				"high",
+				"fips"
 			]
 		}
 	}
