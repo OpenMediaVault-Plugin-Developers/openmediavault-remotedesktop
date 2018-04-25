@@ -45,16 +45,32 @@ username=ask
 password=ask
 ip=127.0.0.1
 port=-1
+
+[xorg]
+name=Xorg
+lib=libxup.so
+username=ask
+password=ask
+ip=127.0.0.1
+port=-1
+code=20
 EOF
 
 # backup keyboard shortcuts file and change tab value
-cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
-   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml.bak
+#cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
+#   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml.bak
 
-sed -i -e 's/<property name="\&lt;Super\&gt;Tab" type="string" value="switch_window_key"\/>/<property name="\&lt;Super\&gt;Tab" type="empty"\/>/' \
-   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+#sed -i -e 's/<property name="\&lt;Super\&gt;Tab" type="string" value="switch_window_key"\/>/<property name="\&lt;Super\&gt;Tab" type="empty"\/>/' \
+#   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 
-# restart xrdp service
-deb-systemd-invoke start xrdp.service >/dev/null || true
+# stop xrdp service
+systemctl stop xrdp.service >/dev/null || true
+
+# make sure sockdir exists
+chmod 744 /usr/share/xrdp/socksetup
+/usr/share/xrdp/socksetup
+
+# start xrdp service
+systemctl start xrdp.service
 
 exit 0

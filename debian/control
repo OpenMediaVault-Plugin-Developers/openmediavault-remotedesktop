@@ -9,8 +9,8 @@ Homepage: http://omv-extras.org/
 
 Package: openmediavault-remotedesktop
 Architecture: all
-Depends: openmediavault (>= 3.0.40),
-         tightvncserver,
+Depends: openmediavault (>= 4.0.5),
+         tigervnc-standalone-server,
          xfce4,
          xfonts-base,
          xrdp,
