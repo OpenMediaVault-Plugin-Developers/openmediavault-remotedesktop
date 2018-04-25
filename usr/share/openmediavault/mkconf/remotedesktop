@@ -3,7 +3,7 @@
 # @author    Volker Theile <volker.theile@openmediavault.org>
 # @author    OpenMediaVault Plugin Developers <plugins@omv-extras.org>
 # @copyright Copyright (c) 2009-2013 Volker Theile
-# @copyright Copyright (c) 2015-2016 OpenMediaVault Plugin Developers
+# @copyright Copyright (c) 2015-2018 OpenMediaVault Plugin Developers
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,22 +31,67 @@ cryptlevel=$(omv_config_get "/config/services/remotedesktop/cryptlevel")
 # Create updatedb config file
 cat <<EOF > ${XRDP_CONFIG}
 # this file was automatically generated
-[globals]
-bitmap_cache=yes
-bitmap_compression=yes
+
+[Globals]
+ini_version=1
+fork=true
 port=${rdpport}
+use_vsock=false
+tcp_nodelay=true
+tcp_keepalive=true
+security_layer=negotiate
 crypt_level=${cryptlevel}
-channel_code=1
+certificate=
+key_file=
+ssl_protocols=TLSv1, TLSv1.1, TLSv1.2
+autorun=
+allow_channels=true
+allow_multimon=true
+bitmap_cache=true
+bitmap_compression=true
+bulk_compression=true
+max_bpp=32
+new_cursors=true
+use_fastpath=both
+blue=009cb5
+grey=dedede
+ls_top_window_bg_color=009cb5
+ls_width=350
+ls_height=430
+ls_bg_color=dedede
+ls_logo_filename=
+ls_logo_x_pos=55
+ls_logo_y_pos=50
+ls_label_x_pos=30
+ls_label_width=60
+ls_input_x_pos=110
+ls_input_width=210
+ls_input_y_pos=220
+ls_btn_ok_x_pos=142
+ls_btn_ok_y_pos=370
+ls_btn_ok_width=85
+ls_btn_ok_height=30
+ls_btn_cancel_x_pos=237
+ls_btn_cancel_y_pos=370
+ls_btn_cancel_width=85
+ls_btn_cancel_height=30
 
-[xrdp1]
-name=sesman-Xvnc
-lib=libvnc.so
-username=ask
-password=ask
-ip=127.0.0.1
-port=-1
+[Logging]
+LogFile=xrdp.log
+LogLevel=WARN
+EnableSyslog=true
+SyslogLevel=ERROR
 
-[xorg]
+[Channels]
+rdpdr=true
+rdpsnd=true
+drdynvc=true
+cliprdr=true
+rail=true
+xrdpvr=true
+tcutils=true
+
+[Xorg]
 name=Xorg
 lib=libxup.so
 username=ask
@@ -54,23 +99,59 @@ password=ask
 ip=127.0.0.1
 port=-1
 code=20
+
+[X11rdp]
+name=X11rdp
+lib=libxup.so
+username=ask
+password=ask
+ip=127.0.0.1
+port=-1
+xserverbpp=24
+code=10
+
+[Xvnc]
+name=Xvnc
+lib=libvnc.so
+username=ask
+password=ask
+ip=127.0.0.1
+port=-1
+
+[console]
+name=console
+lib=libvnc.so
+ip=127.0.0.1
+port=5900
+username=na
+password=ask
+
+[vnc-any]
+name=vnc-any
+lib=libvnc.so
+ip=ask
+port=ask5900
+username=na
+password=ask
+
+[sesman-any]
+name=sesman-any
+lib=libvnc.so
+ip=ask
+port=-1
+username=ask
+password=ask
+
+[neutrinordp-any]
+name=neutrinordp-any
+lib=libxrdpneutrinordp.so
+ip=ask
+port=ask3389
+username=ask
+password=ask
 EOF
 
-# backup keyboard shortcuts file and change tab value
-#cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml \
-#   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml.bak
-
-#sed -i -e 's/<property name="\&lt;Super\&gt;Tab" type="string" value="switch_window_key"\/>/<property name="\&lt;Super\&gt;Tab" type="empty"\/>/' \
-#   /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-
-# stop xrdp service
-systemctl stop xrdp.service >/dev/null || true
-
-# make sure sockdir exists
-chmod 744 /usr/share/xrdp/socksetup
-/usr/share/xrdp/socksetup
-
 # start xrdp service
-systemctl start xrdp.service
+systemctl restart xrdp.service
 
 exit 0
