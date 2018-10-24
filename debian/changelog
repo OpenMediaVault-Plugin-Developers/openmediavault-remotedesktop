@@ -1,3 +1,9 @@
+openmediavault-remotedesktop (4.0.1) stable; urgency=low
+
+  * Add dbus-x11 dependency to fix dbus error
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Wed, 24 Oct 2018 10:51:11 -0500
+
 openmediavault-remotedesktop (4.0) stable; urgency=low
 
   * Update for OMV 4.x
